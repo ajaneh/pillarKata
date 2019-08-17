@@ -1,21 +1,18 @@
 
-#o simulate, first coarsely and then more faithfully, an ordinary graphite pencil.
-#  It includes writing and editing text, point degradation, using the eraser, and sharpening the pencil.
 durability = 0
-#1) When the pencil is instructed to write a string of text on a sheet of paper,
-# the paper should reflect the text that was written.
-def PencilWrite(textToWrite, pencilDurability):
+#pencilCurrentUse : ['write', 'sharpen', 'erase']
+def PencilWrite(textToWrite, pencilDurability, pencilLength, pencilCurrentUse):
     global durability
     durability = pencilDurability
     paper = ""
     #init just return text
-    for letter in textToWrite:
-        paper += CanLetterBeWritten(letter)
+    if pencilCurrentUse == 'write':
+        for letter in textToWrite:
+            paper += CanLetterBeWritten(letter)
     return paper
 
-#Lowercase letters should degrade the pencil point by a value of one,
-# and capital letters should degrade the point by two.
-# Hence when a pencil with a point durability of four
+#When a pencil is sharpened, it regains its initial point durability
+
 def CanLetterBeWritten(letter):
     global durability
     if letter in ["", " ", "\n"]:
