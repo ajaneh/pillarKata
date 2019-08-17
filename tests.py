@@ -5,11 +5,10 @@ def AcceptAStringAndWriteIt(string, result):
     assert string == result
 
 def TestDurabillityOnlyWritesLettersWhenSharp(string, result):
-    print result
     assert string == result
 
 
 #AcceptAStringAndWriteIt("Testing testing", PencilWrite("Testing testing"))
-#TestDurabillityOnlyWritesLettersWhenSharp("test", PencilWrite("test"))
-TestDurabillityOnlyWritesLettersWhenSharp("Tes", PencilWrite("Test"))
-#TestDurabillityOnlyWritesLettersWhenSharp("Test ", PencilWrite("Tests"))
+TestDurabillityOnlyWritesLettersWhenSharp("test", PencilWrite("test", 4))
+TestDurabillityOnlyWritesLettersWhenSharp("Tes ", PencilWrite("Test", 4))
+TestDurabillityOnlyWritesLettersWhenSharp("Test ", PencilWrite("Tests", 5))
