@@ -24,16 +24,37 @@ class PaperWriter:
             if i and spaceStart != -1:
                 spaceEnd = ind
                 break
-                
+
         splitPaper[spaceStart] = " ".join(splitPaper[spaceStart:spaceEnd])
         splitPaper = [x for x in splitPaper if x != '']
         erasedStringLength = spaceEnd-spaceStart-1
-
-        for index,word in enumerate(splitPaper):
+        newWordLength = len(textToAdd)
+        if erasedStringLength >= newWordLength:
+            for index,word in enumerate(splitPaper):
                 if len(word) == erasedStringLength:
-                    splitPaper[index] = textToAdd
-                    break
-        self.paper = " ".join(splitPaper)
+                        splitPaper[index] = textToAdd
+                        self.paper = " ".join(splitPaper)
+                        break
+        else:
+            newstring = ''
+            lengthCountdown = 0
+            for index,character in enumerate(self.paper):
+                 if index < spaceStart:
+                    newstring += character
+                 if spaceStart <= index <= spaceEnd -1:
+                    newstring += textToAdd[lengthCountdown]
+                    lengthCountdown += 1
+                 if index > spaceEnd -1:
+                     if lengthCountdown != newWordLength:
+                         if character != ' ':
+                             newstring += '@'
+                         else:
+                            newstring += textToAdd[lengthCountdown]
+                         lengthCountdown += 1
+                     else:
+                         newstring += character
+            self.paper = newstring
+
 
 
 

@@ -40,8 +40,14 @@ def TestEditingWorksInSimpleNonShiftedScenario():
     Papers.PencilWrite("sally sold seashells on the seashore")
     Papers.erase("sally")
     Papers.edit("alex")
-    print Papers.paper
     assert Papers.paper == "alex sold seashells on the seashore"
+
+def TestEditingWorksWhenWordExceedsSpace():
+    Papers = PaperWriter(100, 1, 100)
+    Papers.PencilWrite("sally did shuffle seashells on the seashore")
+    Papers.erase("sally")
+    Papers.edit("alexanndra")
+    assert Papers.paper == "alexan@@@ashuffle seashells on the seashore"
 
 test_AcceptAStringAndWriteIt("Testing testing")
 TestDurabilityOnlyWritesLettersWhenSharp("test", "test", 4)
@@ -51,3 +57,4 @@ TestDurabilityResetsWhenSharpened(4)
 TestEraseFunctionality("a test is a test when tested", "a test is a      when tested")
 TestEraserDegrades()
 TestEditingWorksInSimpleNonShiftedScenario()
+TestEditingWorksWhenWordExceedsSpace()
