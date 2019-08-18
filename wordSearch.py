@@ -8,23 +8,52 @@ class PaperWriter:
         self.durability = pencilDurability
         self.paper = paper
         self.eraserDurability = eraserDurability
+        self.specificEraserDurability = eraserDurability
         self.specificDurability = pencilDurability
 
 
     def sharpen(self):
         self.durability = self.specificDurability
 
+    def edit(self, textToAdd):
+        splitPaper = self.paper.split(" ")
+        spaceStart,spaceEnd = -1, 0
+        for ind,i in enumerate(splitPaper):
+            if not i and spaceStart == -1:
+                spaceStart = ind
+            if i and spaceStart != -1:
+                spaceEnd = ind
+                break
+                
+        splitPaper[spaceStart] = " ".join(splitPaper[spaceStart:spaceEnd])
+        splitPaper = [x for x in splitPaper if x != '']
+        erasedStringLength = spaceEnd-spaceStart-1
+
+        for index,word in enumerate(splitPaper):
+                if len(word) == erasedStringLength:
+                    splitPaper[index] = textToAdd
+                    break
+        self.paper = " ".join(splitPaper)
+
+
+
     def erase(self, textToManipulate):
         splitTextInReverse = self.paper.split()[::-1]
-        splitTextInReverse.remove(textToManipulate)
+        for index, word in enumerate(splitTextInReverse):
+            if word == textToManipulate:
+                splitTextToManipulate = list(textToManipulate)
+                for ind,letter in enumerate(splitTextToManipulate[::-1]):
+                        if self.eraserDurability > 0:
+                            splitTextToManipulate[ind] = " "
+                            self.eraserDurability -= 1
+                splitTextInReverse[index] = ''.join(splitTextToManipulate)
+                break
         self.paper = splitTextInReverse[::-1]
         self.paper = " ".join(self.paper)
 
     def PencilWrite(self, textToManipulate):
             for letter in textToManipulate:
                 self.CanLetterBeWritten(letter)
-
-    #When a pencil is sharpened, it regains its initial point durability
 
 
     def CanLetterBeWritten(self,letter):
