@@ -14,18 +14,16 @@ class PaperWriter:
     def sharpen(self):
         self.durability = self.specificDurability
 
-    def PencilWrite(self, textToManipulate, pencilCurrentUse):
-        #init just return text
-        if pencilCurrentUse == 'write':
+    def erase(self, textToManipulate):
+        splitTextInReverse = self.paper.split()[::-1]
+        splitTextInReverse.remove(textToManipulate)
+        self.paper = splitTextInReverse[::-1]
+        self.paper = " ".join(self.paper)
+
+    def PencilWrite(self, textToManipulate):
             for letter in textToManipulate:
                 self.CanLetterBeWritten(letter)
-        if pencilCurrentUse == 'sharpen':
-            self.durability = self.specificDurability
-        if pencilCurrentUse == 'erase':
-            splitTextInReverse = self.paper.split()[::-1]
-            splitTextInReverse.remove(textToManipulate)
-            self.paper = splitTextInReverse[::-1]
-            self.paper = " ".join(self.paper)
+
     #When a pencil is sharpened, it regains its initial point durability
 
 
