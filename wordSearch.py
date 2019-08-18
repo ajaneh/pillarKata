@@ -1,17 +1,21 @@
-
-durability = 0
+from globalValues import *
 #pencilCurrentUse : ['write', 'sharpen', 'erase']
-def PencilWrite(textToWrite, pencilDurability, pencilLength, pencilCurrentUse):
+def PencilWrite(textToWrite, pencilDurability, pencilLength, pencilCurrentUse, currentPaper = ""):
     global durability
-    durability = pencilDurability
-    paper = ""
+    global paper
+    paper = currentPaper
     #init just return text
     if pencilCurrentUse == 'write':
+        if currentPaper == "":
+            durability = pencilDurability
         for letter in textToWrite:
             paper += CanLetterBeWritten(letter)
-    return paper
+    if pencilCurrentUse == 'sharpen':
+        durability = pencilDurability
+    return currentPaper + paper
 
 #When a pencil is sharpened, it regains its initial point durability
+
 
 def CanLetterBeWritten(letter):
     global durability
