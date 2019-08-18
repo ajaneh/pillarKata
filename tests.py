@@ -8,18 +8,20 @@ def AcceptAStringAndWriteIt(string, result):
 def TestDurabilityOnlyWritesLettersWhenSharp(string, result):
     assert string == result
 
-#When a pencil is sharpened, it regains its initial point durability
-#Need to refactor to accept length and mode
-def TestDurabilityResetsWhenSharpened(expectedDurability, useFunction):
-    print durability, expectedDurability
+def TestDurabilityResetsWhenSharpened(expectedDurability, *args):
+    PencilWrite(*args)
     assert durability == expectedDurability
 
-
+def TestEraseFunctionality(initialString, expectedString, resultingString):
+    assert initialString != resultingString
+    assert expectedString == resultingString
 
 AcceptAStringAndWriteIt("Testing testing", PencilWrite("Testing testing", 100, 1, 'write'))
 TestDurabilityOnlyWritesLettersWhenSharp("test", PencilWrite("test", 4, 1, 'write'))
 TestDurabilityOnlyWritesLettersWhenSharp("Tes ", PencilWrite("Test", 4,1, 'write'))
 TestDurabilityOnlyWritesLettersWhenSharp("Test ", PencilWrite("Tests", 5, 1, 'write'))
-TestDurabilityResetsWhenSharpened(0, PencilWrite("test", 4, 1, 'write'))
+TestDurabilityResetsWhenSharpened(0, "test", 4, 1, 'write')
 #globals make testing difficult
-#TestDurabilityResetsWhenSharpened(4, PencilWrite("", 4, 1, 'sharpen', 'test'))
+#TestDurabilityResetsWhenSharpened(4, "", 4, 1, 'sharpen', 'test')
+TestEraseFunctionality("a test is a test when tested", "a test is a when tested",
+                       PencilWrite("test", 100, 1, 'erase', 'a test is a test when tested'))
