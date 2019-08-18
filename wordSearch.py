@@ -1,41 +1,48 @@
-from globalValues import *
+
 #pencilCurrentUse : ['write', 'sharpen', 'erase']
-def PencilWrite(textToManipulate, pencilDurability, pencilLength, pencilCurrentUse, currentPaper = ""):
-    global durability
-    global paper
+specificDurability = 0
 
-    #init just return text
-    if pencilCurrentUse == 'write':
-        paper = currentPaper
-        if currentPaper == "":
-            durability = pencilDurability
-        for letter in textToManipulate:
-            paper += CanLetterBeWritten(letter)
-    if pencilCurrentUse == 'sharpen':
-        durability = pencilDurability
-    if pencilCurrentUse == 'erase':
-        paper = ""
-        splitTextInReverse = currentPaper.split()[::-1]
-        splitTextInReverse.remove(textToManipulate)
-        currentPaper = splitTextInReverse[::-1]
-        currentPaper = " ".join(currentPaper)
+class PaperWriter:
 
-    return currentPaper + paper
-
-#When a pencil is sharpened, it regains its initial point durability
+    def __init__(self, pencilDurability, pencilLength, eraserDurability, paper = ""):
+        self.durability = pencilDurability
+        self.paper = paper
+        self.eraserDurability = eraserDurability
+        self.specificDurability = pencilDurability
 
 
-def CanLetterBeWritten(letter):
-    global durability
-    if letter in ["", " ", "\n"]:
-        return letter
-    if letter.islower():
-        cost = 1
-    if letter.isupper():
-        cost = 2
-    if cost <= durability:
-        durability -= cost
-        return letter
-    else:
-        return " "
+    def sharpen(self):
+        self.durability = self.specificDurability
+
+    def PencilWrite(self, textToManipulate, pencilCurrentUse):
+        #init just return text
+        if pencilCurrentUse == 'write':
+            for letter in textToManipulate:
+                self.CanLetterBeWritten(letter)
+        if pencilCurrentUse == 'sharpen':
+            self.durability = self.specificDurability
+        if pencilCurrentUse == 'erase':
+            splitTextInReverse = self.paper.split()[::-1]
+            splitTextInReverse.remove(textToManipulate)
+            self.paper = splitTextInReverse[::-1]
+            self.paper = " ".join(self.paper)
+    #When a pencil is sharpened, it regains its initial point durability
+
+
+    def CanLetterBeWritten(self,letter):
+        cost = 0
+        if letter in ["", " ", "\n"]:
+            self.paper += letter
+            return
+        if letter.islower():
+            cost = 1
+        if letter.isupper():
+            cost = 2
+        if cost <= self.durability:
+            self.durability -= cost
+            self.paper += letter
+            return
+        else:
+            self.paper += " "
+            return
 
