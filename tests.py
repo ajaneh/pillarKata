@@ -4,31 +4,31 @@ from wordSearch import *
 
 def test_AcceptAStringAndWriteIt(string):
     #don't worry about file in/out yet
-    Papers = PaperWriter(100, 1, 1)
+    Papers = PaperWriter(100, 5, 1)
     Papers.PencilWrite(string)
     assert Papers.paper == string
 
 def TestDurabilityOnlyWritesLettersWhenSharp(expectedString, string, givenDurability):
-    Papers = PaperWriter(givenDurability, 1, 1)
+    Papers = PaperWriter(givenDurability, 5, 1)
     Papers.PencilWrite(string)
     assert Papers.paper == expectedString
 
 def TestDurabilityResetsWhenSharpened(expectedDurability):
-    Papers = PaperWriter(4, 1, 1)
+    Papers = PaperWriter(4, 5, 1)
     Papers.PencilWrite("test")
     assert Papers.durability == 0
     Papers.sharpen()
     assert Papers.durability == expectedDurability
 
 def TestEraseFunctionality(initialString, expectedString):
-    Papers = PaperWriter(100, 1, 4)
+    Papers = PaperWriter(100, 5, 4)
     Papers.PencilWrite("a test is a test when tested")
     Papers.erase("test")
     assert initialString != Papers.paper
     assert expectedString == Papers.paper
 
 def TestEraserDegrades():
-    Papers = PaperWriter(100, 1, 5)
+    Papers = PaperWriter(100, 5, 5)
     Papers.PencilWrite("test my test")
     Papers.erase("test")
     assert Papers.eraserDurability == 1
@@ -36,14 +36,14 @@ def TestEraserDegrades():
     assert Papers.eraserDurability == 0
 
 def TestEditingWorksInSimpleNonShiftedScenario():
-    Papers = PaperWriter(100, 1, 100)
+    Papers = PaperWriter(100, 5, 100)
     Papers.PencilWrite("sally sold seashells on the seashore")
     Papers.erase("sally")
     Papers.edit("alex")
     assert Papers.paper == "alex sold seashells on the seashore"
 
 def TestEditingWorksWhenWordExceedsSpace():
-    Papers = PaperWriter(100, 1, 100)
+    Papers = PaperWriter(100, 5, 100)
     Papers.PencilWrite("sally did shuffle seashells on the seashore")
     Papers.erase("sally")
     Papers.edit("alexanndra")
